@@ -18,26 +18,20 @@ int main() {
     while (C--) {
         cin >> N;
 
-        vector<int> M, E;
-        priority_queue <pair<int, int>> Food;
-
+        priority_queue <int, vector<int>, greater<int>> pq;
         for (int i = 0; i < N; i++) {
             int tmp; cin >> tmp;
-            M.push_back(tmp);
-        }
-        for (int i = 0; i < N; i++) {
-            int tmp; cin >> tmp;
-            E.push_back(tmp);
-        }
-        for (int i = 0; i < N; i++) {
-            Food.push({ E[i], M[i] });
+            pq.push(tmp);
         }
 
-        int ret = 0, beginEat = 0;
-        while (!Food.empty()) {
-            beginEat += Food.top().second;
-            ret = max(ret, beginEat + Food.top().first);
-            Food.pop();
+        int ret = 0;
+        while (pq.size() != 1) {
+            int a = pq.top(); pq.pop();
+            int b = pq.top(); pq.pop();
+
+            ret += a + b;
+
+            pq.push(a + b);
         }
 
         cout << ret << "\n";
